@@ -207,35 +207,7 @@ public class Arena {
 
 	
 
-	/**
-	 * Defend. If you have to defend this method is going to be used
-	 * 
-	 * @param userinput
-	 *            the userinput
-	 * @return true, if successful
-	 */
-	public boolean defend(String userinput) {
-		if (!Character.isAlphabetic(userinput.charAt(1))) {
-			char cRow = userinput.charAt(0);
-			int column = Character.getNumericValue(userinput.charAt(1));
-			int row = detectChar(cRow);
-			if (!(column > this.column) || !(row > this.row)) {
-				System.out.println(column);
-				if (this.grid[row][column] == '#') {
-					this.grid[row][column] = 'X';
-				} else {
-					this.grid[row][column] = 'O';
-					return false;
-				}
-
-			}
-
-		} else {
-			System.out.println("You entered a wrong value please redo!");
-			return false;
-		}
-		return true;
-	}
+	
 
 	/**
 	 * Detect char. Checks a char and returns the numeric value.

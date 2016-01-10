@@ -26,6 +26,7 @@ public class Launcher {
     	
 		
         Game c = new Game();
+        c.start();
     }
 
 }

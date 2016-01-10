@@ -100,4 +100,15 @@ public class Player extends Arena{
         }
         return false;
     }
+    
+    public boolean takeHit(int row, int column){
+        if(this.getGrid()[row][column]=='#'){
+            this.setValue(row, column, 'X');
+            return true;
+        }else if(this.getGrid()[row][column]=='.'){
+            this.setValue(row, column, 'O');
+            return false;
+        }
+        return false;
+    }
 }
