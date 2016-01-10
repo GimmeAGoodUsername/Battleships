@@ -56,7 +56,7 @@ public class Arena {
 	/**
 	 * Generate grid.
 	 */
-	private void generateGrid() {
+	public void generateGrid() {
 		for (int i = 0; i < this.row; i++) {
 			for (int j = 0; j < this.column; j++) {
 				this.grid[i][j] = '.';

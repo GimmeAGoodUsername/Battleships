@@ -28,6 +28,7 @@ public class Game {
         // Someday there will be a name input but this is going to be a problem
         // for future me
         this.player = new Player("Just a player :>", 30, "a1");
+        this.player.setShips();
         this.enemy = new Enemy(10, 10);
         // Someday i will make this calculate itself
 
@@ -107,11 +108,22 @@ public class Game {
     }
 
     /**
-     * Reset hp.
+     * For future uses Reset hp.
      */
     private void resetHP() {
-        this.enemiesHP = 30;
-        this.player.setHitPoints(30);
+        this.enemy.generateGrid();
+        this.player.generateGrid();
+    }
+
+    private void victory() {
+        if (this.enemy.numberOfHits() < 1) {
+            System.out.println("You have won");
+            System.exit(0);
+        }
+    }
+
+    private boolean defeat() {
+        return this.player.isAlive();
     }
 
     /**
@@ -122,61 +134,31 @@ public class Game {
         this.resetHP();
         boolean game = true;
         while (game) {
-            if (this.player.getHitPoints() < 1) {
-                System.out.println("You lost. Wanna play again? Y|N");
-                String input = sc.nextLine();
-                switch (input) {
-                case "Y":
-                    this.start();
-                    break;
-                case "N":
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println(
-                            "You may have entered a wrong value." + " The programm will close now due to the coder "
-                                    + "being lazy to implement a way to restart!");
+            this.victory();
+            if (!this.defeat()) {
+                System.exit(0);
+            }
+            System.out.println("Please enter what you are going to do next:");
+            System.out.println("Attack (A)| Defend (D) | EXIT (E)");
+            String input = sc.nextLine();
+            input = input.toUpperCase();
+            switch (input) {
+            case "ATTACK":
+            case "A":
+                attack();
+                break;
+            case "DEFEND":
+            case "D":
+                defend();
+                break;
+            case "EXIT":
+            case "E":
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Wrong value!");
+                break;
 
-                    break;
-                }
-            } else if (enemiesHP < 1) {
-                System.out.println("You win. Wanna play again? Y|N");
-                String input = sc.nextLine();
-                switch (input) {
-                case "Y":
-                    this.start();
-                    break;
-                case "N":
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println(
-                            "You may have entered a wrong value." + " The programm will close now due to the coder "
-                                    + "being lazy to implement a way to restart!");
-                    break;
-                }
-            } else {
-                System.out.println("Please enter what you are going to do next:");
-                System.out.println("Attack (A)| Defend (D) | EXIT (E)");
-                String input = sc.nextLine();
-                input = input.toUpperCase();
-                switch (input) {
-                case "ATTACK":
-                case "A":
-                    attack();
-                    break;
-                case "DEFEND":
-                case "D":
-                    defend();
-                    break;
-                case "EXIT":
-                case "E":
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Wrong value!");
-                    break;
-                }
             }
         }
     }
