@@ -39,6 +39,7 @@ public class Arena {
 		this.row = row;
 		this.column = column;
 		this.grid = new char[this.row][this.column];
+		this.generateGrid();
 	}
 
 	/**
@@ -62,8 +63,18 @@ public class Arena {
 			}
 		}
 	}
+	public void setValue(int row, int column, char value){
+	    this.grid[row][column]= value;
+	}
+	public char[][] getGrid() {
+        return grid;
+    }
 
-	/**
+    public void setGrid(char[][] grid) {
+        this.grid = grid;
+    }
+
+    /**
 	 * Prints the grid.
 	 * 
 	 * @return
@@ -95,7 +106,7 @@ public class Arena {
 	// When I wrote this, only God and I understood what I was doing
 	// Now, God only knows
 
-	public void testShips() {
+	public void setShips() {
 		this.generateGrid();
 		ShipTypes[] sT = { ShipTypes.Carrier, ShipTypes.Battleship,
 		        ShipTypes.Submarine, ShipTypes.Destroyer };
@@ -112,7 +123,7 @@ public class Arena {
 				if (!this.checkInput(sT[i].name(), sT[i].getLength(), input)) {
 					System.out
 					        .println("You have entered a wrong value please redo");
-					this.testShips();
+					this.setShips();
 					break outer;
 				}
 				System.out.println(this);
@@ -194,33 +205,7 @@ public class Arena {
 		return true;
 	}
 
-	/**
-	 * Attack. If you have to attack this method is going to be used
-	 * 
-	 * @param userinput
-	 *            the userinput
-	 * @param symbol
-	 *            the symbol
-	 * @return true, if successful
-	 */
-	public boolean attack(String userinput, char symbol) {
-		if (!Character.isAlphabetic(userinput.charAt(1))) {
-			char cRow = userinput.charAt(0);
-			int column = Character.getNumericValue(userinput.charAt(1));
-			System.out.println(column + "C");
-			int row = detectChar(cRow);
-			if (!(column > this.column) || !(row > this.row)) {
-				System.out.println(column + "CC");
-				System.out.println(row + "cRow");
-				this.grid[row][column] = symbol;
-			}
-
-		} else {
-			System.out.println("You entered a wrong value please redo!");
-			return false;
-		}
-		return true;
-	}
+	
 
 	/**
 	 * Defend. If you have to defend this method is going to be used
@@ -259,7 +244,7 @@ public class Arena {
 	 *            the c
 	 * @return the int
 	 */
-	private int detectChar(char c) {
+	public int detectChar(char c) {
 		c = Character.toUpperCase(c);
 		int out = 999;
 		switch (c) {

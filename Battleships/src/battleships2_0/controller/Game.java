@@ -2,6 +2,8 @@ package battleships2_0.controller;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import battleships2_0.model.Enemy;
 import battleships2_0.model.Player;
 
 
@@ -17,7 +19,7 @@ public class Game {
 	
 	/** The player. */
 	private Player player;
-	
+	private Enemy enemy;
 	/** The enemies hp. */
 	private int enemiesHP;
 
@@ -29,7 +31,7 @@ public class Game {
 		// Someday there will be a name input but this is going to be a problem
 		// for future me
 		this.player = new Player("Just a player :>", 30, "a1");
-
+		this.enemy = new Enemy(10,10);
 		// Someday i will make this calculate itself
 
 		this.playThaGame();
@@ -43,7 +45,7 @@ public class Game {
 	private void attack() {
 		Scanner sc = new Scanner(System.in);
 		try {
-			System.out.println(this.player.getPlayerHits().toString());
+			System.out.println(this.enemy.toString());
 			System.out.println("You are attacking");
 			System.out.println("Please enter coordinates");
 			String userinput = sc.nextLine();
@@ -51,8 +53,24 @@ public class Game {
 			System.out.println("Please enter 'X' for a hit or 'O' for no hit");
 			String hit = sc.next();
 
-			if ((Character.toUpperCase((hit.charAt(0))) == 'X')) {
-				if (!(this.player.getPlayerHits().attack(userinput, 'X'))) {
+			
+			    if (!Character.isAlphabetic(userinput.charAt(1))) {
+		            char cRow = userinput.charAt(0);
+		            int column = Character.getNumericValue(userinput.charAt(1));
+		            int row = enemy.detectChar(cRow);
+		            if ((Character.toUpperCase((hit.charAt(0))) == 'X')) {
+		            if (!(column > 10) || !(row > 10)) {
+		                System.out.println(column + "CC");
+		                System.out.println(row + "cRow");
+		                this.enemy.set(row, column, true);
+		            }
+
+		        } else {
+		            System.out.println("You entered a wrong value please redo!");
+		           
+		        }
+		        
+				if (!(this.getPlayerHits().attack(userinput, 'X'))) {
 					this.attack();
 				}else{
 					this.attack();

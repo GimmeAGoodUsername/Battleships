@@ -9,7 +9,7 @@ package battleships2_0.model;
  * 13.12.2015
  * Player.java
  */
-public class Player {
+public class Player extends Arena{
     
     /** The name. */
     private String name;
@@ -20,11 +20,6 @@ public class Player {
     /** The id. */
     private String id;
     
-    /** The player hits. */
-    private Arena playerHits;
-    
-    /** The player ships. */
-    private Arena playerShips;
 
     /**
      * Instantiates a new player.
@@ -34,15 +29,12 @@ public class Player {
      * @param id the id
      */
     public Player(String name, int hitPoints, String id) {
-        super();
+        super(10,10);
         this.name = name;
         this.hitPoints = hitPoints;
         this.id = id;
         //Someday the size of the grid is going to be determined by input as well.
-        this.playerHits = new Arena(10, 10);
-        this.playerShips = new Arena(10, 10);
-        //this.playerHits.printTest();
-        this.playerShips.testShips();
+        
     }
 
     /**
@@ -99,40 +91,13 @@ public class Player {
         this.id = id;
     }
 
-	/**
-	 * Gets the player hits.
-	 *
-	 * @return the player hits
-	 */
-	public Arena getPlayerHits() {
-		return playerHits;
-	}
-
-	/**
-	 * Sets the player hits.
-	 *
-	 * @param playerHits the new player hits
-	 */
-	public void setPlayerHits(Arena playerHits) {
-		this.playerHits = playerHits;
-	}
-
-	/**
-	 * Gets the player ships.
-	 *
-	 * @return the player ships
-	 */
-	public Arena getPlayerShips() {
-		return playerShips;
-	}
-
-	/**
-	 * Sets the player ships.
-	 *
-	 * @param playerShips the new player ships
-	 */
-	public void setPlayerShips(Arena playerShips) {
-		this.playerShips = playerShips;
-	}
-    
+	
+    public boolean isAlive(){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j<10; j++){
+                if(this.getGrid()[i][j]=='#')return true;
+            }
+        }
+        return false;
+    }
 }
